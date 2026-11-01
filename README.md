@@ -1,46 +1,52 @@
-# Cloud Data Engineering + RAG Portfolio
+# Cloud Data Engineering & RAG Projects
 
-A practical, interview-ready portfolio covering **Azure, AWS, Google Cloud, and a cross-cloud RAG solution**.
+This repository contains my hands-on work and personal projects across **Azure, AWS, Google Cloud, Data Engineering, and Generative AI (RAG)**.
+
+The projects focus on building practical data pipelines, processing structured and streaming data, working with cloud data platforms, and exploring how AI and LLMs can be integrated with enterprise data.
 
 ## Projects
 
-1. **Azure — Healthcare claims lakehouse:** ADLS Gen2 → Azure Data Factory → Databricks → Delta Lake → Synapse serverless SQL / Power BI.
-2. **AWS — Retail event-driven data platform:** S3 → EventBridge/SQS → Glue → Lambda → Athena/Redshift, with data quality and monitoring.
-3. **GCP — Mobility analytics platform:** Cloud Storage → Pub/Sub → Dataflow → BigQuery → Looker.
-4. **RAG — Enterprise data engineering knowledge assistant:** ingest project documents, chunk and embed them, retrieve relevant context, and generate grounded answers with citations.
+1. **Azure – Healthcare Data Engineering:** Building a healthcare claims data pipeline using ADLS Gen2, Azure Data Factory, Databricks, Delta Lake, and Synapse Analytics.
 
-Each case study includes a business scenario, architecture, data flow, implementation plan, sample code/SQL, validation, security, monitoring, and interview talking points.
+2. **AWS – Retail Data Engineering:** Developing an event-driven data processing workflow using Amazon S3, AWS Glue, Lambda, EventBridge, SQS, Athena, and Redshift.
 
-## Quick start
+3. **GCP – Mobility Data Analytics:** Working with streaming data pipelines using Google Cloud Storage, Pub/Sub, Dataflow, BigQuery, and Looker.
 
-Requirements: Python 3.10+, `pandas`, `python-dotenv`. Cloud SDKs and services are optional until you deploy.
+4. **RAG – Data Engineering Knowledge Assistant:** Exploring Retrieval-Augmented Generation (RAG) to process technical documents, generate embeddings, retrieve relevant information, and provide context-based responses using LLMs.
+
+## Technologies & Tools
+
+- **Cloud:** Microsoft Azure, AWS, Google Cloud Platform
+- **Data Engineering:** Python, SQL, PySpark, ETL/ELT, Data Pipelines
+- **Azure:** ADF, ADLS Gen2, Databricks, Delta Lake, Synapse Analytics
+- **AWS:** S3, Glue, Lambda, Athena, Redshift, EventBridge
+- **GCP:** BigQuery, Pub/Sub, Dataflow, Cloud Storage
+- **AI & GenAI:** RAG, LLMs, Embeddings, Vector Search, Document Processing
+
+## Getting Started
+
+The repository includes sample datasets, Python scripts, SQL queries, and project documentation.
+
+To run the local examples:
 
 ```bash
 python -m venv .venv
-# Windows:
 .venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
 pip install -r requirements.txt
+
 python src/transform_claims.py
 python src/transform_retail_orders.py
 python src/transform_mobility.py
 ```
 
-The sample scripts run locally against the included CSV files and write curated outputs to `output/`.
-They are intentionally cloud-neutral transformations; the case studies explain how to connect them to each cloud's managed services.
+The examples use sample datasets and can be extended to work with cloud services.
 
-## Suggested portfolio presentation
+## Repository Structure
 
-- Put this repository on GitHub after reviewing and customizing it.
-- Add your own architecture diagrams and screenshots from a sandbox deployment.
-- Clearly describe this as a **portfolio implementation / hands-on project**, not production client work unless you actually deployed it for a client.
-- Replace sample metrics with measurements from your own run. Do not claim the illustrative business outcomes as measured results.
+- `docs/` – Project documentation and technical details
+- `src/` – Python data processing scripts
+- `data/` – Sample datasets
+- `sql/` – SQL queries and transformations
+- `cloud_templates/` – Cloud deployment notes and configurations
 
-## Repository map
-
-- `docs/` — detailed case studies and interview walkthroughs
-- `src/` — runnable local ETL examples
-- `data/` — synthetic sample datasets
-- `sql/` — warehouse transformation examples
-- `cloud_templates/` — deployment outlines and starter configuration
+I use these projects to explore different cloud technologies, improve my data engineering skills, and experiment with practical applications of AI and RAG.
