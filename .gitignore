@@ -1,0 +1,1 @@
+.venv/\n__pycache__/\n*.pyc\n.env\n*/output/\nrag/chroma_db/\nrag/knowledge_base/*\n!rag/knowledge_base/.gitkeep\n
