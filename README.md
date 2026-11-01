@@ -1,10 +1,5 @@
-# RAG document assistant
+# GCP mobility streaming analytics
 
-Local prototype for document loading, chunking, embeddings, Chroma vector search and LLM answers with source labels.
+Flow: mobile/vehicle events -> Pub/Sub -> Apache Beam/Dataflow -> BigQuery -> Looker.
 
-Install `pip install -r rag/requirements.txt`. Put .txt, .md or .pdf documents in `rag/knowledge_base/`. Set OPENAI_API_KEY, then run:
-```bash
-python rag/ingest.py
-python rag/ask.py "How are duplicate claims handled?"
-```
-First ingestion downloads the sentence-transformer embedding model. For enterprise use, add authentication, document ACL filters, PII controls, auditing, evaluation and managed infrastructure.
+Run `python gcp/transform_local.py` locally. `mobility_dataflow.py` is the streaming Beam example. Deploy with DataflowRunner and pass `--input_subscription`, `--output_table`, `--deadletter_table`, project, region and staging/temp bucket arguments. Create BigQuery dataset/table and grant the worker service account required Pub/Sub, BigQuery and bucket permissions. Review event-time/watermark behavior before production use.
