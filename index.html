@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sankar Kommanaboina - Senior AI/ML Engineer portfolio">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Sankar Kommanaboina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column; hero with a live RAG-pipeline strip, then work, experience timeline, skills, education, contact. */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --ink:#141a2b; --muted:#566079; --line:#dde2ec;
+  --accent:#2a46d4; --accent-soft:#e6eafc; --signal:#0f8a6a;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1320; --surface:#161b2c; --ink:#e8ebf4; --muted:#9aa3bb; --line:#262d44;
+  --accent:#8ea0ff; --accent-soft:#1e2647; --signal:#4fd1a8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1320; --surface:#161b2c; --ink:#e8ebf4; --muted:#9aa3bb; --line:#262d44;
+  --accent:#8ea0ff; --accent-soft:#1e2647; --signal:#4fd1a8; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:960px;margin:0 auto;padding-block:56px 72px;display:flex;flex-direction:column;gap:88px}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.label{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+p{margin:0}
+
+/* Hero */
+.hero{display:flex;flex-direction:column;gap:28px}
+.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--signal)}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal)}
+h1{font-size:clamp(44px,8vw,84px);font-weight:700;letter-spacing:-.02em}
+.role{font-family:var(--display);font-weight:500;font-size:clamp(22px,3.2vw,30px);color:var(--accent)}
+.lede{max-width:62ch;font-size:18px;color:var(--muted)}
+.lede strong{color:var(--ink);font-weight:600}
+.contact{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:500 15px var(--body);padding:10px 16px;border-radius:8px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn:hover{border-color:var(--accent)}
+.btn .k{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.btn.primary .k{color:inherit;opacity:.8}
+
+/* Pipeline strip */
+.pipe{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.pipe ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.pipe li{position:relative;font-family:var(--mono);font-size:13px;padding:12px 10px;border-radius:8px;background:var(--accent-soft);color:var(--ink);
+  display:flex;flex-direction:column;gap:2px;animation:pulse 6s infinite;animation-delay:calc(var(--i) * 1s)}
+.pipe li span{color:var(--muted);font-size:11.5px}
+@keyframes pulse{0%,12%{box-shadow:inset 0 0 0 1.5px var(--accent)}20%,100%{box-shadow:inset 0 0 0 1.5px transparent}}
+@media (prefers-reduced-motion:reduce){.pipe li{animation:none}}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stat{background:var(--surface);padding:18px 20px;display:flex;flex-direction:column;gap:4px}
+.stat b{font-family:var(--display);font-size:30px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;color:var(--muted)}
+
+/* Sections */
+section{display:flex;flex-direction:column;gap:28px}
+.head{display:flex;flex-direction:column;gap:8px}
+h2{font-size:clamp(30px,4.5vw,42px);font-weight:700;letter-spacing:-.01em}
+
+/* Work */
+.work{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.card .where{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.card h3{font-size:22px;font-weight:700}
+.card p{color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.tag{font-family:var(--mono);font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+
+/* Case studies */
+.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.pill{align-self:flex-start;font-family:var(--mono);font-size:12px;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.card .more{font-weight:500;text-decoration:none}
+.card .more:hover{text-decoration:underline}
+.card ul{margin:0;padding-left:18px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+@media (max-width:760px){.cases{grid-template-columns:1fr}}
+
+/* Timeline */
+.timeline{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.job{display:grid;grid-template-columns:200px 1fr;gap:24px;padding-block:28px;border-bottom:1px solid var(--line)}
+.when{font-family:var(--mono);font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.when .now{color:var(--signal)}
+.job-body{display:flex;flex-direction:column;gap:10px;min-width:0}
+.job h3{font-size:22px;font-weight:700}
+.job h3 small{font-family:var(--body);font-weight:400;font-size:16px;color:var(--muted)}
+.job ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.job li::marker{color:var(--accent)}
+
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 24px}
+.skill{display:flex;flex-direction:column;gap:10px;min-width:0}
+.skill h3{font-family:var(--body);font-size:15px;font-weight:600}
+
+/* Education + contact */
+.edu{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.edu .card h3{font-size:20px}
+.end{background:var(--accent);color:var(--bg);border-radius:16px;padding:40px 32px;display:flex;flex-direction:column;gap:18px}
+.end h2{color:inherit}
+.end p{max-width:56ch;opacity:.9}
+.end .btn{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.end .btn .k{color:var(--muted)}
+.toast{font-family:var(--mono);font-size:13px;min-height:1.2em}
+footer{font-family:var(--mono);font-size:12.5px;color:var(--muted);text-align:center}
+
+@media (max-width:760px){
+  .pipe ol{grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .work,.edu{grid-template-columns:1fr}
+  .skills{grid-template-columns:1fr 1fr}
+  .job{grid-template-columns:1fr;gap:10px}
+  .when{flex-direction:row;gap:12px;flex-wrap:wrap}
+}
+@media (max-width:480px){
+  .wrap{padding-block:36px 56px;gap:64px}
+  .pipe ol{grid-template-columns:repeat(2,1fr)}
+  .skills{grid-template-columns:1fr}
+  .end{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="status">Open to Senior AI/ML Engineer roles</span>
+    <h1>Sankar Kommanaboina</h1>
+    <p class="role">Senior AI/ML Engineer · Generative AI, RAG &amp; Agentic AI</p>
+    <p class="lede">I build <strong>LLM-powered applications, retrieval systems and AI agents</strong> that hold up in enterprise settings. Nine years across software engineering, data science and machine learning, most recently at <strong>AbbVie</strong> and <strong>Capital One</strong>, on AWS and Azure.</p>
+    <div class="contact">
+      <button class="btn primary" id="copy-email" type="button">Email <span class="k">kommanaboinasankar37@gmail.com</span></button>
+      <a class="btn" href="https://www.linkedin.com/in/sankar-kommanaboina/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Sankarkommanaboina" target="_blank" rel="noopener">GitHub</a>
+      <span class="btn" style="cursor:text">Phone <span class="k">+1 716-939-1003</span></span>
+    </div>
+    <p class="toast" id="toast" aria-live="polite"></p>
+
+    <div class="pipe" aria-label="The RAG pipeline I build">
+      <span class="label">How I build retrieval-augmented generation</span>
+      <ol>
+        <li style="--i:0">ingest<span>S3 · ADLS Gen2</span></li>
+        <li style="--i:1">chunk<span>document splitting</span></li>
+        <li style="--i:2">embed<span>vector indexes</span></li>
+        <li style="--i:3">retrieve<span>OpenSearch · AI Search</span></li>
+        <li style="--i:4">generate<span>Bedrock · Azure OpenAI</span></li>
+        <li style="--i:5">evaluate<span>accuracy · latency</span></li>
+      </ol>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>9</b><span>years in software, data &amp; ML</span></div>
+      <div class="stat"><b>4</b><span>companies, US and India</span></div>
+      <div class="stat"><b>3</b><span>clouds: AWS, Azure and GCP</span></div>
+      <div class="stat"><b>M.S.</b><span>Information Technology</span></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="work-h">
+    <div class="head"><span class="label">Selected work</span><h2 id="work-h">What I've built</h2></div>
+    <div class="work">
+      <article class="card">
+        <span class="where">AbbVie · 2024 – present</span>
+        <h3>Enterprise knowledge retrieval with RAG</h3>
+        <p>LLM applications that search internal documents and answer with grounded, cited context. Covers semantic and vector search, document summarization and information extraction, served through FastAPI.</p>
+        <div class="tags"><span class="tag">Amazon Bedrock</span><span class="tag">OpenSearch</span><span class="tag">LangChain</span><span class="tag">FastAPI</span></div>
+      </article>
+      <article class="card">
+        <span class="where">AbbVie · Capital One</span>
+        <h3>Agentic AI workflows</h3>
+        <p>AI agents that break a business task into steps, call approved APIs and enterprise services, check their outputs and return structured results.</p>
+        <div class="tags"><span class="tag">LangGraph</span><span class="tag">Tool calling</span><span class="tag">Pydantic</span><span class="tag">Structured output</span></div>
+      </article>
+      <article class="card">
+        <span class="where">Capital One · 2022 – 2024</span>
+        <h3>Demand forecasting &amp; customer analytics</h3>
+        <p>Time-series and XGBoost models for demand prediction and operational planning, with batch inference feeding business reports and decisions.</p>
+        <div class="tags"><span class="tag">XGBoost</span><span class="tag">Azure ML</span><span class="tag">Data Factory</span><span class="tag">Time series</span></div>
+      </article>
+      <article class="card">
+        <span class="where">Across roles</span>
+        <h3>ML pipelines &amp; LLM evaluation</h3>
+        <p>End-to-end pipelines from ingestion to deployment, plus evaluation suites that measure factual accuracy, retrieval relevance, response quality and latency before release.</p>
+        <div class="tags"><span class="tag">SageMaker</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">ROC-AUC · F1</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="cases-h">
+    <div class="head"><span class="label">Concept projects · UX research</span><h2 id="cases-h">Case studies</h2>
+      <p class="lede" style="font-size:16px">Self-initiated projects on how people trust and use AI assistants. The research plans and prototypes are complete; fieldwork with participants is the next phase.</p></div>
+    <div class="cases">
+      <article class="card">
+        <span class="pill">Concept · fieldwork next</span>
+        <span class="where">Healthcare · UX Researcher &amp; Conversation Designer</span>
+        <h3>AI Patient Support Assistant</h3>
+        <p>A conversational assistant that explains specialty-medication access in plain language: insurance coverage, prior authorization, copay help and enrollment. It never gives medical advice and always offers a path to a person.</p>
+        <ul>
+          <li>Six-stage patient journey from prescription to first refill</li>
+          <li>Six scenarios with guardrails and human hand-off rules</li>
+          <li>Working LLM prototype, research plan and five usability tasks</li>
+        </ul>
+        <div class="tags"><span class="tag">Journey mapping</span><span class="tag">Conversation design</span><span class="tag">Usability testing</span><span class="tag">Python</span></div>
+        <a class="more" href="https://claude.ai/artifact/2JhLXzUXEMG7D7zq822NgH" target="_blank" rel="noopener">Read the case study →</a>
+      </article>
+      <article class="card">
+        <span class="pill">Concept · fieldwork next</span>
+        <span class="where">Financial services · UX Researcher</span>
+        <h3>Agentic Commerce Assistant</h3>
+        <p>A research program for "Atlas", an AI assistant at a fictional bank that helps customers compare and apply for financial products. It asks what customers will let an agent do, and under what conditions.</p>
+        <ul>
+          <li>Five-level delegation spectrum, from Inform to Execute within limits</li>
+          <li>12-week, four-phase research roadmap with five research questions</li>
+          <li>Seven-dimension trust and responsible-AI framework with success metrics</li>
+        </ul>
+        <div class="tags"><span class="tag">Research strategy</span><span class="tag">Survey design</span><span class="tag">Concept testing</span><span class="tag">Responsible AI</span></div>
+        <a class="more" href="https://claude.ai/artifact/9xEaY2fcEppShgHZnhwpRS" target="_blank" rel="noopener">Read the case study →</a>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="de-h">
+    <div class="head"><span class="label">Portfolio builds · Data engineering &amp; RAG</span><h2 id="de-h">Cloud data platforms</h2>
+      <p class="lede" style="font-size:16px">Hands-on case studies across Azure, AWS and Google Cloud. Each one has an architecture, data-quality rules, security and monitoring design, and a Python transformation that runs locally on sample data.</p></div>
+    <div class="cases">
+      <article class="card">
+        <span class="pill">Portfolio build · runs locally</span>
+        <span class="where">Azure · Healthcare</span>
+        <h3>Healthcare claims lakehouse</h3>
+        <p>Standardizes daily medical and pharmacy claims from several partners into Bronze, Silver and Gold layers for utilization reporting.</p>
+        <ul>
+          <li>Validation rules with a quarantine table and reason codes</li>
+          <li>Deduplication that keeps the latest correction per claim</li>
+          <li>Idempotent Delta MERGE so reruns never double-count</li>
+        </ul>
+        <div class="tags"><span class="tag">Data Factory</span><span class="tag">ADLS Gen2</span><span class="tag">Databricks</span><span class="tag">Delta Lake</span><span class="tag">Synapse</span></div>
+      </article>
+      <article class="card">
+        <span class="pill">Portfolio build · runs locally</span>
+        <span class="where">AWS · Retail</span>
+        <h3>Event-driven retail data platform</h3>
+        <p>Gives a retailer near-real-time visibility into orders, payments and fulfillment, plus a trusted daily sales model.</p>
+        <ul>
+          <li>SQS buffering with retries and a dead-letter queue</li>
+          <li>Duplicate-safe processing for at-least-once events</li>
+          <li>Partitioned Parquet for Athena and Redshift queries</li>
+        </ul>
+        <div class="tags"><span class="tag">EventBridge</span><span class="tag">SQS</span><span class="tag">Lambda</span><span class="tag">Glue</span><span class="tag">Athena</span><span class="tag">Redshift</span></div>
+      </article>
+      <article class="card">
+        <span class="pill">Portfolio build · runs locally</span>
+        <span class="where">Google Cloud · Mobility</span>
+        <h3>Streaming mobility analytics</h3>
+        <p>Turns trip events from vehicles and mobile apps into hourly operational metrics and historical reporting.</p>
+        <ul>
+          <li>Event-time windows with allowed lateness for delayed data</li>
+          <li>Dead-letter handling for invalid events</li>
+          <li>Partitioned, clustered BigQuery tables to control cost</li>
+        </ul>
+        <div class="tags"><span class="tag">Pub/Sub</span><span class="tag">Dataflow</span><span class="tag">BigQuery</span><span class="tag">Composer</span><span class="tag">Looker</span></div>
+      </article>
+      <article class="card">
+        <span class="pill">Design &amp; build plan</span>
+        <span class="where">Cross-cloud · GenAI</span>
+        <h3>RAG assistant for data engineering</h3>
+        <p>An internal assistant that answers questions from runbooks, schemas and incident notes, and cites the passages it used.</p>
+        <ul>
+          <li>Hybrid keyword and vector search with access filters applied before retrieval</li>
+          <li>Guardrails against prompt injection and invented runbook steps</li>
+          <li>Evaluation on recall@k, faithfulness and citation precision</li>
+        </ul>
+        <div class="tags"><span class="tag">Azure AI Search</span><span class="tag">Bedrock</span><span class="tag">Vertex AI</span><span class="tag">FAISS</span><span class="tag">Embeddings</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="exp-h">
+    <div class="head"><span class="label">Experience</span><h2 id="exp-h">Where I've worked</h2></div>
+    <div class="timeline">
+      <div class="job">
+        <div class="when"><span class="now">Apr 2024 – Present</span><span>Chicago, IL</span></div>
+        <div class="job-body">
+          <h3>AI/ML Engineer <small>· AbbVie</small></h3>
+          <ul>
+            <li>Built Generative AI applications for document analysis, extraction, summarization and enterprise knowledge retrieval.</li>
+            <li>Implemented RAG workflows and vector search with embeddings, Amazon OpenSearch and Amazon Bedrock.</li>
+            <li>Designed agentic workflows in LangChain and LangGraph that use tool calling to finish multi-step tasks.</li>
+            <li>Ran LLM evaluations for factual accuracy, retrieval relevance, response quality and latency.</li>
+            <li>Shipped containerized FastAPI services with Docker, SageMaker, CloudWatch and CI/CD.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when"><span>Jun 2022 – Mar 2024</span><span>New York, NY</span></div>
+        <div class="job-body">
+          <h3>ML Engineer <small>· Capital One</small></h3>
+          <ul>
+            <li>Built forecasting, customer analytics and demand prediction models with Scikit-learn and XGBoost.</li>
+            <li>Prototyped Generative AI for enterprise search and summarization with Azure OpenAI and Azure AI Search.</li>
+            <li>Orchestrated data ingestion and transformation with Azure Data Factory and ADLS Gen2.</li>
+            <li>Added automated model validation, regression tests and data-quality checks before deployment.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when"><span>Mar 2021 – Dec 2021</span><span>India</span></div>
+        <div class="job-body">
+          <h3>Data Scientist <small>· Tata Consultancy Services</small></h3>
+          <ul>
+            <li>Developed classification, regression and forecasting models with Scikit-learn.</li>
+            <li>Ran EDA, statistical analysis and hypothesis testing on structured business data.</li>
+            <li>Tuned models with cross-validation and reported results with Matplotlib, Seaborn and BI tools.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when"><span>Jan 2018 – Mar 2021</span><span>India</span></div>
+        <div class="job-body">
+          <h3>Junior Data Scientist <small>· Suneratech</small></h3>
+          <ul>
+            <li>Cleaned and prepared data with Python, Pandas and SQL for analysis and recurring reports.</li>
+            <li>Built foundational ML models and automated repetitive data-cleaning tasks with reusable scripts.</li>
+            <li>Worked with data engineers and analysts on data definitions, validation and reconciliation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="skills-h">
+    <div class="head"><span class="label">Toolkit</span><h2 id="skills-h">Skills</h2></div>
+    <div class="skills">
+      <div class="skill"><h3>Generative AI &amp; agents</h3><div class="tags"><span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">Prompt engineering</span><span class="tag">Tool calling</span><span class="tag">Embeddings</span><span class="tag">Hybrid search</span><span class="tag">Hugging Face</span><span class="tag">Transformers</span><span class="tag">Snowflake Cortex</span><span class="tag">Google Vertex AI</span><span class="tag">Copilot</span></div></div>
+      <div class="skill"><h3>Machine learning</h3><div class="tags"><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Classification</span><span class="tag">Regression</span><span class="tag">Clustering</span><span class="tag">Forecasting</span><span class="tag">Feature engineering</span></div></div>
+      <div class="skill"><h3>Cloud platforms</h3><div class="tags"><span class="tag">Amazon Bedrock</span><span class="tag">SageMaker</span><span class="tag">S3</span><span class="tag">OpenSearch</span><span class="tag">Azure OpenAI</span><span class="tag">Azure ML</span><span class="tag">Azure AI Search</span><span class="tag">Google Cloud (GCP)</span><span class="tag">Vertex AI</span><span class="tag">BigQuery</span><span class="tag">Cloud Storage</span></div></div>
+      <div class="skill"><h3>Data engineering</h3><div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">ETL</span><span class="tag">Snowflake</span><span class="tag">Data Factory</span><span class="tag">ADLS Gen2</span></div></div>
+      <div class="skill"><h3>APIs &amp; MLOps</h3><div class="tags"><span class="tag">FastAPI</span><span class="tag">Flask</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">Git</span><span class="tag">CloudWatch</span></div></div>
+      <div class="skill"><h3>Evaluation</h3><div class="tags"><span class="tag">Precision / Recall</span><span class="tag">F1</span><span class="tag">ROC-AUC</span><span class="tag">Error analysis</span><span class="tag">LLM evaluation</span><span class="tag">Benchmarking</span></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="edu-h">
+    <div class="head"><span class="label">Education</span><h2 id="edu-h">Education</h2></div>
+    <div class="edu">
+      <div class="card"><span class="where">Pennsylvania, USA</span><h3>Master's in Information Technology</h3><p>Harrisburg University</p></div>
+      <div class="card"><span class="where">India</span><h3>Bachelor's in Information Technology</h3><p>CR Reddy College of Engineering, Andhra University</p></div>
+    </div>
+  </section>
+
+  <section class="end" aria-labelledby="contact-h">
+    <h2 id="contact-h">Let's talk</h2>
+    <p>I'm looking for senior AI/ML engineering roles working on Generative AI, retrieval and agent systems. The fastest way to reach me is email.</p>
+    <div class="contact">
+      <button class="btn" id="copy-email-2" type="button">Copy email <span class="k">kommanaboinasankar37@gmail.com</span></button>
+      <a class="btn" href="https://www.linkedin.com/in/sankar-kommanaboina/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Sankarkommanaboina" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p class="toast" id="toast-2" aria-live="polite"></p>
+  </section>
+
+  <footer>Sankar Kommanaboina · Senior AI/ML Engineer</footer>
+</div>
+
+<script>
+(function(){
+  var email="kommanaboinasankar37@gmail.com";
+  function hook(btnId,toastId){
+    var b=document.getElementById(btnId),t=document.getElementById(toastId);
+    b.addEventListener("click",function(){
+      function done(){t.textContent="Email address copied";setTimeout(function(){t.textContent=""},2500)}
+      function fail(){
+        var k=b.querySelector(".k"),r=document.createRange();r.selectNodeContents(k);
+        var s=getSelection();s.removeAllRanges();s.addRange(r);t.textContent="Press Ctrl+C or ⌘C to copy";
+      }
+      try{navigator.clipboard.writeText(email).then(done,fail)}catch(e){fail()}
+    });
+  }
+  hook("copy-email","toast");hook("copy-email-2","toast-2");
+})();
+</script>
+</body>
+</html>
