@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Study 1 —
+Azure Healthcare Claims Lakehouse | Sankar Kommanaboina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f4f6f9;--surface:#fff;--ink:#141a2b;--muted:#566079;--line:#dde2ec;--accent:#2a46d4;--accent-soft:#e6eafc;
+--display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1320;--surface:#161b2c;--ink:#e8ebf4;--muted:#9aa3bb;--line:#262d44;--accent:#8ea0ff;--accent-soft:#1e2647;color-scheme:dark}}
+*{box-sizing:border-box}html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:32px 72px}
+nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:40px;font-size:15px}
+a{color:var(--accent);text-underline-offset:3px}
+.btn{display:inline-flex;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:500}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(32px,5.5vw,48px);margin:8px 0 24px}
+h2{font-size:26px;margin:48px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:28px 0 8px}
+p,li{max-width:70ch}
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--accent-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+thead:empty,thead tr:only-child th:empty{display:none}
+pre{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;font:13px/1.55 var(--mono);white-space:pre-wrap}
+code{font-family:var(--mono);font-size:.92em}
+blockquote{margin:16px 0;padding:4px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+footer{margin-top:56px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+</style></head><body><div class="wrap">
+<nav><a class="btn" href="../index.html">← Back to portfolio</a><a class="btn primary" href="https://github.com/Sankarkommanaboina/Sankarkommanaboina.github.io/tree/main/projects/cloud-data-engineering" target="_blank" rel="noopener">View code on GitHub</a></nav>
+<span class="eyebrow">Data engineering · Azure</span>
+<h1 id="case-study-1--azure-healthcare-claims-lakehouse">Case Study 1 —
+Azure Healthcare Claims Lakehouse</h1>
+<h2 id="business-problem">Business problem</h2>
+<p>A healthcare analytics team receives daily medical and pharmacy
+claims from multiple partners. Files arrive in inconsistent CSV layouts,
+contain duplicates and malformed dates, and must be standardized for
+downstream quality and utilization reporting.</p>
+<h2 id="architecture">Architecture</h2>
+<p><strong>Partner SFTP / API → Azure Data Factory → ADLS Gen2 (Bronze)
+→ Azure Databricks (PySpark) → Delta Lake (Silver/Gold) → Synapse
+serverless SQL / Power BI</strong></p>
+<p>Supporting services:</p>
+<ul>
+<li>Key Vault for secrets; Managed Identity for service-to-service
+authentication.</li>
+<li>Azure Monitor + Log Analytics for pipeline and job telemetry.</li>
+<li>Purview for catalog, lineage, and classification.</li>
+<li>Private Endpoints, RBAC, storage firewalls, and encryption for
+security.</li>
+</ul>
+<h2 id="data-zones">Data zones</h2>
+<ul>
+<li><strong>Bronze:</strong> immutable source files, ingestion
+timestamp, source filename, batch ID.</li>
+<li><strong>Silver:</strong> standardized types, normalized codes,
+deduplication, rejected-row quarantine.</li>
+<li><strong>Gold:</strong> member-month, provider utilization,
+paid-claims summaries, quality measures.</li>
+</ul>
+<h2 id="processing-steps">Processing steps</h2>
+<ol type="1">
+<li>ADF schedules ingestion and lands source files in date-partitioned
+ADLS paths.</li>
+<li>ADF records file name, size, checksum, arrival time, and run ID in
+an audit table.</li>
+<li>Databricks reads Bronze with an explicit schema; avoid schema
+inference for production feeds.</li>
+<li>Validate required fields, allowed claim status, non-negative paid
+amount, and date ranges.</li>
+<li>Deduplicate by claim business key and latest source update
+timestamp.</li>
+<li>Write valid rows to Silver Delta tables using an idempotent
+merge/upsert pattern.</li>
+<li>Aggregate Gold tables for reporting; optimize partitioning based on
+query patterns.</li>
+<li>Publish pipeline status, row counts, rejects, and freshness
+SLA.</li>
+</ol>
+<h2 id="example-validation-rules">Example validation rules</h2>
+<ul>
+<li><code>claim_id</code> and <code>member_id</code> must be
+present.</li>
+<li><code>service_date</code> must parse and not be unreasonably in the
+future.</li>
+<li><code>paid_amount &gt;= 0</code>.</li>
+<li>A repeated claim key should resolve to the latest
+<code>source_updated_at</code>.</li>
+<li>Rejected rows retain a reason code and source lineage.</li>
+</ul>
+<h2 id="reliability-and-scale">Reliability and scale</h2>
+<ul>
+<li>Make ingestion idempotent using source file identity + batch
+ID.</li>
+<li>Use retries for transient storage/network failures, not for
+deterministic data errors.</li>
+<li>Separate technical failures from data-quality failures.</li>
+<li>Use Auto Loader or a controlled incremental file discovery pattern
+for high-volume landing.</li>
+<li>Use Delta <code>MERGE</code> for late-arriving corrections.</li>
+<li>Reprocess a date or batch from Bronze without asking the source to
+resend.</li>
+</ul>
+<h2 id="security">Security</h2>
+<p>Use managed identities instead of embedded credentials; store any
+unavoidable secrets in Key Vault. Apply least-privilege RBAC and
+table-level access. Mask or tokenize direct identifiers in analytical
+layers. Use private networking and audit access to sensitive
+datasets.</p>
+<h2 id="interview-walkthrough">Interview walkthrough</h2>
+<p><strong>Question: How would you handle duplicate and late-arriving
+claims?</strong> I would preserve every raw delivery in Bronze, identify
+the claim business key, and compare source update timestamps. Silver
+would use a deterministic merge so reruns do not create duplicates. Late
+corrections update the existing claim while retaining ingestion and
+source lineage. I would monitor duplicate rates and late-arrival
+lag.</p>
+<p><strong>Question: How do you troubleshoot a failed ADF
+pipeline?</strong> Start with the pipeline and activity run IDs, inspect
+the failing activity and integration runtime, classify the error,
+validate source availability and permissions, and check the Databricks
+job logs. Retry only transient errors. After correction, rerun the
+affected batch using the same batch identifier and confirm row counts
+and audit status.</p>
+<h2 id="portfolio-implementation">Portfolio implementation</h2>
+<p>Run <code>python src/transform_claims.py</code>. It reads
+<code>data/healthcare_claims.csv</code>, standardizes fields,
+deduplicates claims, and writes:</p>
+<ul>
+<li><code>output/claims_silver.csv</code></li>
+<li><code>output/claims_rejected.csv</code></li>
+<li><code>output/claims_gold_daily.csv</code></li>
+</ul>
+<p>The included code is a local demonstration of the transformation
+logic. For Azure deployment, replace local reads/writes with ADLS paths
+and execute the transformations as a Databricks job orchestrated by
+ADF.</p>
+<footer>Sankar Kommanaboina · <a href="../index.html">Portfolio</a></footer></div></body></html>

@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic
+Commerce Assistant — UX Research Case Study | Sankar Kommanaboina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f4f6f9;--surface:#fff;--ink:#141a2b;--muted:#566079;--line:#dde2ec;--accent:#2a46d4;--accent-soft:#e6eafc;
+--display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1320;--surface:#161b2c;--ink:#e8ebf4;--muted:#9aa3bb;--line:#262d44;--accent:#8ea0ff;--accent-soft:#1e2647;color-scheme:dark}}
+*{box-sizing:border-box}html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:32px 72px}
+nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:40px;font-size:15px}
+a{color:var(--accent);text-underline-offset:3px}
+.btn{display:inline-flex;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:500}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(32px,5.5vw,48px);margin:8px 0 24px}
+h2{font-size:26px;margin:48px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:28px 0 8px}
+p,li{max-width:70ch}
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--accent-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+thead:empty,thead tr:only-child th:empty{display:none}
+pre{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;font:13px/1.55 var(--mono);white-space:pre-wrap}
+code{font-family:var(--mono);font-size:.92em}
+blockquote{margin:16px 0;padding:4px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+footer{margin-top:56px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+</style></head><body><div class="wrap">
+<nav><a class="btn" href="../index.html">← Back to portfolio</a></nav>
+<span class="eyebrow">UX research · Concept project</span>
+<h1 id="agentic-commerce-assistant--ux-research-case-study">Agentic
+Commerce Assistant — UX Research Case Study</h1>
+<h2 id="overview">Overview</h2>
+<p>A research program for an AI assistant that helps bank customers
+discover, compare and apply for financial products — and, with
+permission, act on their behalf. The program asks when customers will
+trust an agent to recommend, prepare and execute financial tasks, and
+what the product must do to earn that trust responsibly.</p>
+<div class="table-wrap"><table>
+<tbody>
+<tr class="odd">
+<td><strong>Domain</strong></td>
+<td>Financial services — agentic commerce</td>
+</tr>
+<tr class="even">
+<td><strong>Product concept</strong></td>
+<td>"Atlas", an AI assistant at the fictional Harbor Bank</td>
+</tr>
+<tr class="odd">
+<td><strong>Role</strong></td>
+<td>UX Researcher (solo): strategy, methods, frameworks, prototype,
+analysis tooling</td>
+</tr>
+<tr class="even">
+<td><strong>Methods</strong></td>
+<td>Interviews, diary study, survey, concept testing, moderated
+usability, longitudinal benchmarking</td>
+</tr>
+<tr class="odd">
+<td><strong>Project type</strong></td>
+<td>Self-initiated concept project</td>
+</tr>
+<tr class="even">
+<td><strong>Status</strong></td>
+<td>Research strategy, frameworks, instruments and prototype complete;
+fieldwork is the next phase</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="problem-and-research-questions">Problem and research
+questions</h2>
+<p>AI agents can now compare products, fill in applications and complete
+transactions — but in finance, a wrong or unexplained action costs
+customers money and trust. The product question is not "can the agent do
+it?" but "what will customers let it do, and under what conditions?"</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Research question</th>
+<th>Decision it informs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RQ1</td>
+<td>How do customers express financial needs and goals to an AI
+assistant versus search or a banker?</td>
+<td>Intent model and conversation design</td>
+</tr>
+<tr class="even">
+<td>RQ2</td>
+<td>Which tasks are customers willing to delegate, at what level of
+autonomy, and why?</td>
+<td>Autonomy defaults and roadmap sequencing</td>
+</tr>
+<tr class="odd">
+<td>RQ3</td>
+<td>Do customers understand AI recommendations well enough to make a
+confident, informed choice?</td>
+<td>Explanation and disclosure design</td>
+</tr>
+<tr class="even">
+<td>RQ4</td>
+<td>What drives and blocks adoption — and which risks matter most to
+customers, Compliance and Risk?</td>
+<td>Launch criteria and safeguards</td>
+</tr>
+<tr class="odd">
+<td>RQ5</td>
+<td>How does trust change after repeated use, errors and recovery?</td>
+<td>Long-term success metrics</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="delegation-spectrum">Delegation spectrum</h2>
+<p>Trust is not a single yes or no: customers are likely to accept AI at
+low autonomy and hesitate as it moves toward acting. I framed the
+agent's capabilities as five levels so research can measure willingness
+to delegate at each one.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>The agent…</th>
+<th>Example</th>
+<th>What research must learn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L0 Inform</td>
+<td>Explains concepts and options</td>
+<td>"What's a balance transfer?"</td>
+<td>Is it accurate, clear and neutral?</td>
+</tr>
+<tr class="even">
+<td>L1 Recommend</td>
+<td>Ranks options for the customer</td>
+<td>"Best card for travel rewards"</td>
+<td>Is the rationale understood and believed?</td>
+</tr>
+<tr class="odd">
+<td>L2 Prepare</td>
+<td>Pre-fills an application for review</td>
+<td>Drafts a card application</td>
+<td>Do customers review it, and catch errors?</td>
+</tr>
+<tr class="even">
+<td>L3 Execute with approval</td>
+<td>Acts after explicit confirmation</td>
+<td>Submits after "Yes, apply"</td>
+<td>Is consent informed and easy to refuse?</td>
+</tr>
+<tr class="odd">
+<td>L4 Execute within limits</td>
+<td>Acts on standing rules</td>
+<td>Moves savings when balance &gt; $X</td>
+<td>What limits, alerts and undo are required?</td>
+</tr>
+</tbody>
+</table></div>
+<p>The survey measures comfort at each level, and usability sessions
+observe behavior at L1–L3 — comparing what people say with what they
+do.</p>
+<h2 id="consumer-intent-framework">Consumer intent framework</h2>
+<p>Customers rarely start with a product name; they start with a life
+event or goal. The framework links what customers say to the shopping
+mission behind it and the products that serve it, so the agent can
+respond to real intent rather than keywords.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Life event or goal</th>
+<th>How customers might say it</th>
+<th>Shopping mission</th>
+<th>Products and benefits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Moving out / first home</td>
+<td>"I need to build credit before renting"</td>
+<td>Build credit</td>
+<td>Secured card, credit-builder tools</td>
+</tr>
+<tr class="even">
+<td>Big trip coming up</td>
+<td>"Which card won't charge me abroad?"</td>
+<td>Optimize a purchase</td>
+<td>Travel card, no foreign transaction fee</td>
+</tr>
+<tr class="odd">
+<td>Carrying a balance</td>
+<td>"I'm paying too much interest"</td>
+<td>Reduce cost of debt</td>
+<td>Balance transfer card, personal loan</td>
+</tr>
+<tr class="even">
+<td>New baby / job change</td>
+<td>"I need to start saving properly"</td>
+<td>Build a safety net</td>
+<td>High-yield savings, automatic transfers</td>
+</tr>
+<tr class="odd">
+<td>Large purchase</td>
+<td>"Can I spread the cost of a laptop?"</td>
+<td>Finance a purchase</td>
+<td>Intro 0% APR card, installment plan</td>
+</tr>
+</tbody>
+</table></div>
+<p>Research validates this framework: interviews and diary entries
+supply real phrasing, and card sorting checks that missions match how
+customers group their needs. It is a hypothesis until then.</p>
+<h2 id="decision-journey">Decision journey</h2>
+<p>The journey runs from intent to ongoing management; trust is most at
+risk at Apply, where the agent moves from advising to acting.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>Customer is asking</th>
+<th>Agent's role</th>
+<th>Research lens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Intent</td>
+<td>"What do I need?"</td>
+<td>Clarify the goal with a few questions</td>
+<td>How needs are expressed (RQ1)</td>
+</tr>
+<tr class="even">
+<td>2. Explore</td>
+<td>"What are my options?"</td>
+<td>Inform (L0)</td>
+<td>Comprehension, neutrality</td>
+</tr>
+<tr class="odd">
+<td>3. Evaluate</td>
+<td>"Which is best for me, and why?"</td>
+<td>Recommend with rationale (L1)</td>
+<td>Explainability, calibrated trust</td>
+</tr>
+<tr class="even">
+<td>4. Consider</td>
+<td>"What's the catch?"</td>
+<td>Surface fees, terms, uncertainty</td>
+<td>Transparency, confidence</td>
+</tr>
+<tr class="odd">
+<td>5. Apply</td>
+<td>"Do it for me?"</td>
+<td>Prepare (L2), then act with approval (L3)</td>
+<td>Control, consent, privacy</td>
+</tr>
+<tr class="even">
+<td>6. Manage</td>
+<td>"Is it working? Can I undo it?"</td>
+<td>Monitor and alert; act within limits (L4)</td>
+<td>Recourse, long-term trust</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="research-roadmap">Research roadmap</h2>
+<p>A 12-week, four-phase plan moves from understanding needs to
+validating the concept to setting benchmarks, so each phase informs a
+specific product decision.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Phase</th>
+<th>Weeks</th>
+<th>Methods and sample</th>
+<th>Answers</th>
+<th>Decision it informs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Discover</td>
+<td>1–4</td>
+<td>12 in-depth interviews; 2-week diary study with 10 participants
+logging money decisions</td>
+<td>RQ1, RQ4</td>
+<td>Opportunity areas and intent framework</td>
+</tr>
+<tr class="even">
+<td>2. Size</td>
+<td>4–6</td>
+<td>Online survey, n ≈ 400, with delegation scale per autonomy
+level</td>
+<td>RQ2, RQ4</td>
+<td>Which segments and tasks to prioritize</td>
+</tr>
+<tr class="odd">
+<td>3. Validate</td>
+<td>6–10</td>
+<td>Concept test of 3 autonomy variants; moderated usability with 8
+participants on the prototype</td>
+<td>RQ2, RQ3</td>
+<td>Autonomy defaults, explanation and consent design</td>
+</tr>
+<tr class="even">
+<td>4. Measure</td>
+<td>10–12, then ongoing</td>
+<td>Baseline benchmark; longitudinal check-ins with pilot users at 30
+and 90 days</td>
+<td>RQ5</td>
+<td>Launch criteria and success metrics</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recruiting:</strong> a mix of financial confidence, digital
+comfort, age and income, including people who distrust AI — adoption
+barriers are as important as enthusiasm.</p>
+<h2 id="trust-and-responsible-ai-framework">Trust and responsible AI
+framework</h2>
+<p>Every concept and prototype round is reviewed against seven
+dimensions, each with a question, the evidence that answers it, and the
+design safeguard it points to.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Dimension</th>
+<th>Review question</th>
+<th>Evidence</th>
+<th>Design safeguard</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Trust calibration</td>
+<td>Do customers trust the agent as much as it deserves — no more, no
+less?</td>
+<td>Confidence vs. accuracy on tasks</td>
+<td>Show confidence and limits; never overstate</td>
+</tr>
+<tr class="even">
+<td>Transparency</td>
+<td>Do customers know why an option was recommended?</td>
+<td>Teach-back of the rationale</td>
+<td>Show key factors and trade-offs, not just a rank</td>
+</tr>
+<tr class="odd">
+<td>Explainability</td>
+<td>Can customers inspect the evidence behind it?</td>
+<td>Source inspection, recall</td>
+<td>Show terms, fees, source and date in context</td>
+</tr>
+<tr class="even">
+<td>Control</td>
+<td>Can customers edit, pause, cancel or override?</td>
+<td>Task observation</td>
+<td>Persistent controls, approval gates, undo</td>
+</tr>
+<tr class="odd">
+<td>Privacy</td>
+<td>Do customers understand what data is used and why?</td>
+<td>Permission comprehension</td>
+<td>Data minimization; just-in-time explanation</td>
+</tr>
+<tr class="even">
+<td>Fairness</td>
+<td>Could the experience disadvantage any group?</td>
+<td>Segmented results; expert review</td>
+<td>Monitor outcomes; accessible alternatives</td>
+</tr>
+<tr class="odd">
+<td>Recourse</td>
+<td>Can customers get help or fix a mistake?</td>
+<td>Error-recovery tasks</td>
+<td>Human hand-off; clear dispute path</td>
+</tr>
+</tbody>
+</table></div>
+<p>Findings are rated 1–5 per dimension and reviewed with Compliance,
+Risk and Legal before each release decision.</p>
+<h2 id="benchmarks-and-success-metrics">Benchmarks and success
+metrics</h2>
+<p>Success is measured across four layers, so the product is judged on
+whether customers understand and trust it appropriately — not only on
+conversions.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Metric</th>
+<th>How measured</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Usability</td>
+<td>Task success rate; time on task; UMUX-Lite</td>
+<td>Moderated sessions; post-task survey</td>
+</tr>
+<tr class="even">
+<td>Comprehension</td>
+<td>Teach-back accuracy on fees and terms</td>
+<td>Customer restates the recommendation in their own words</td>
+</tr>
+<tr class="odd">
+<td>Trust</td>
+<td>Calibrated trust (confidence vs. correctness); willingness to
+delegate per level (1–7)</td>
+<td>Post-task rating; survey delegation scale</td>
+</tr>
+<tr class="even">
+<td>Control and safety</td>
+<td>Review rate before submit; errors caught; escalation rate to a
+human</td>
+<td>Prototype logs and observation</td>
+</tr>
+<tr class="odd">
+<td>Business</td>
+<td>Application start-to-complete rate; drop-off by stage; 90-day
+retention of agent use</td>
+<td>Pilot analytics with Data Science</td>
+</tr>
+</tbody>
+</table></div>
+<p>The first study sets the baseline; later rounds are compared against
+it.</p>
+<h2 id="prototype-and-concept-test">Prototype and concept test</h2>
+<p>The prototype is a configured LLM conversation (ChatGPT) that behaves
+as Atlas, so autonomy levels and explanations can be tested with real
+people before engineering builds anything. Products and terms are
+fictional.</p>
+<pre><code>You are &quot;Atlas&quot;, an AI assistant for the fictional Harbor Bank. You help customers find, compare and apply for Harbor Bank credit cards.
+
+Fictional products:
+- Harbor Everyday: no annual fee, 1.5% cash back, 22.9% APR.
+- Harbor Voyager: $95 annual fee, 3x points on travel, no foreign transaction fees, 24.9% APR.
+- Harbor Reset: no annual fee, 0% APR on balance transfers for 15 months (3% transfer fee), then 21.9% APR.
+
+Rules:
+1. Start by asking about the customer&#39;s goal. Ask at most 3 questions before recommending.
+2. Recommend at most 2 options. For each, explain WHY it fits their stated goal and the main trade-off (fees, APR, conditions).
+3. Never promise approval. Say approval depends on a credit review.
+4. Say clearly when you are unsure or when information is missing.
+5. Before preparing an application, explain what information you need and why. Ask only for what is necessary.
+6. Never submit anything without showing a full summary and getting an explicit &quot;Yes, submit&quot;. Make it easy to say no, edit or cancel.
+7. Offer to connect the customer with a human banker if they seem unsure, upset, or ask about debt hardship, disputes or complaints.
+8. Do not give investment, tax or legal advice.
+
+Greet the customer and ask what they&#39;d like help with.</code></pre>
+<p><strong>Concept and usability tasks</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Scenario</th>
+<th>Success looks like</th>
+<th>Autonomy level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T1 Express a need</td>
+<td>"You're planning a trip abroad. Get help choosing a card."</td>
+<td>Goal captured in 3 questions or fewer</td>
+<td>L0–L1</td>
+</tr>
+<tr class="even">
+<td>T2 Understand the pick</td>
+<td>"Explain why Atlas recommended this card."</td>
+<td>Correct teach-back of rationale and fee</td>
+<td>L1</td>
+</tr>
+<tr class="odd">
+<td>T3 Spot the catch</td>
+<td>"What happens after the 0% period?"</td>
+<td>Identifies the 21.9% APR and transfer fee</td>
+<td>L1</td>
+</tr>
+<tr class="even">
+<td>T4 Prepare and review</td>
+<td>"Let Atlas fill in an application."</td>
+<td>Reviews the summary; notices a planted error</td>
+<td>L2</td>
+</tr>
+<tr class="odd">
+<td>T5 Approve or refuse</td>
+<td>"Decide whether to submit."</td>
+<td>Makes an informed choice; can decline easily</td>
+<td>L3</td>
+</tr>
+<tr class="even">
+<td>T6 Get a person</td>
+<td>"You want to talk to someone about your debt."</td>
+<td>Reaches a banker hand-off</td>
+<td>Recourse</td>
+</tr>
+</tbody>
+</table></div>
+<p>Three concept variants are compared: <strong>Advisor</strong> (L0–L1
+only), <strong>Co-pilot</strong> (up to L3) and
+<strong>Autopilot</strong> (L4 rules), measuring preference, trust and
+willingness to delegate for each.</p>
+<h2 id="stakeholder-partnership">Stakeholder partnership</h2>
+<p>Research is built with partners from the start, so findings arrive in
+a form each team can act on.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Partner</th>
+<th>What they need from research</th>
+<th>How they're involved</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Product</td>
+<td>Which tasks and autonomy levels to build first</td>
+<td>Co-own research questions; prioritization workshop after Phase
+2</td>
+</tr>
+<tr class="even">
+<td>Design</td>
+<td>Where explanations, consent and controls fail</td>
+<td>Observe sessions; joint synthesis</td>
+</tr>
+<tr class="odd">
+<td>Engineering</td>
+<td>Feasibility of controls, undo and logging</td>
+<td>Review prototype constraints before testing</td>
+</tr>
+<tr class="even">
+<td>Data Science</td>
+<td>Metrics that link behavior to trust and outcomes</td>
+<td>Co-define benchmarks and pilot analytics</td>
+</tr>
+<tr class="odd">
+<td>Compliance, Risk, Legal</td>
+<td>Evidence that disclosures, consent and recommendations are
+understood and fair</td>
+<td>Review instruments and stimuli; responsible-AI review each
+round</td>
+</tr>
+<tr class="even">
+<td>Leadership</td>
+<td>Where to invest and what to launch</td>
+<td>Readout per phase: findings, confidence, recommendation, decision
+needed</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Research operations:</strong> a shared session workbook, a
+qualitative codebook, consent and data-handling standards, and a
+repeatable readout template.</p>
+<h2 id="tools-status-and-next-steps">Tools, status and next steps</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>How I used it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ChatGPT</strong></td>
+<td>Drafting support for research instruments; serves as the
+conversational prototype</td>
+</tr>
+<tr class="even">
+<td><strong>Excel</strong></td>
+<td>Survey instrument, session workbook and auto-calculating results
+summary</td>
+</tr>
+<tr class="odd">
+<td><strong>Python</strong></td>
+<td>Theme coding across interview and diary notes, reviewed by hand</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Status:</strong> research strategy, frameworks, instruments,
+prototype and analysis tooling are complete. Fieldwork is the next
+phase; no participant findings are reported yet.</p>
+<p><strong>Next steps</strong></p>
+<ol type="1">
+<li>Run Phase 1 interviews and the diary study; refine the intent
+framework with real customer language.</li>
+<li>Field the delegation survey to size willingness by segment and
+autonomy level.</li>
+<li>Test the three concept variants and set the trust and usability
+baseline.</li>
+<li>Share a readout with recommendations on autonomy defaults and launch
+safeguards.</li>
+</ol>
+<p>I'd be glad to walk through the frameworks and demo the prototype
+live.</p>
+<footer>Sankar Kommanaboina · <a href="../index.html">Portfolio</a></footer></div></body></html>

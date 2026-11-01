@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Study
+2 — AWS Retail Event-Driven Data Platform | Sankar Kommanaboina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f4f6f9;--surface:#fff;--ink:#141a2b;--muted:#566079;--line:#dde2ec;--accent:#2a46d4;--accent-soft:#e6eafc;
+--display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1320;--surface:#161b2c;--ink:#e8ebf4;--muted:#9aa3bb;--line:#262d44;--accent:#8ea0ff;--accent-soft:#1e2647;color-scheme:dark}}
+*{box-sizing:border-box}html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:32px 72px}
+nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:40px;font-size:15px}
+a{color:var(--accent);text-underline-offset:3px}
+.btn{display:inline-flex;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:500}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(32px,5.5vw,48px);margin:8px 0 24px}
+h2{font-size:26px;margin:48px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:28px 0 8px}
+p,li{max-width:70ch}
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--accent-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+thead:empty,thead tr:only-child th:empty{display:none}
+pre{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;font:13px/1.55 var(--mono);white-space:pre-wrap}
+code{font-family:var(--mono);font-size:.92em}
+blockquote{margin:16px 0;padding:4px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+footer{margin-top:56px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+</style></head><body><div class="wrap">
+<nav><a class="btn" href="../index.html">← Back to portfolio</a><a class="btn primary" href="https://github.com/Sankarkommanaboina/Sankarkommanaboina.github.io/tree/main/projects/cloud-data-engineering" target="_blank" rel="noopener">View code on GitHub</a></nav>
+<span class="eyebrow">Data engineering · AWS</span>
+<h1 id="case-study-2--aws-retail-event-driven-data-platform">Case Study
+2 — AWS Retail Event-Driven Data Platform</h1>
+<h2 id="business-problem">Business problem</h2>
+<p>An online retailer needs near-real-time visibility into orders,
+payments, and fulfillment. Batch exports are delayed, source events can
+arrive more than once, and analysts need a trusted daily sales
+model.</p>
+<h2 id="architecture">Architecture</h2>
+<p><strong>Order application → EventBridge / Kinesis → SQS buffer →
+Lambda validation → S3 raw zone → Glue Data Catalog + Glue ETL → S3
+curated Parquet → Athena / Redshift → QuickSight</strong></p>
+<p>Optional components:</p>
+<ul>
+<li>Step Functions for multi-step orchestration.</li>
+<li>CloudWatch for logs, alarms, and metrics.</li>
+<li>Lake Formation for governed table and column access.</li>
+<li>KMS for encryption; IAM roles for least-privilege access.</li>
+</ul>
+<h2 id="data-flow">Data flow</h2>
+<ol type="1">
+<li>The order service publishes order-created and order-updated
+events.</li>
+<li>SQS buffers events and supports retry / dead-letter handling.</li>
+<li>Lambda validates the event envelope and writes immutable JSON to
+S3.</li>
+<li>Glue crawlers or explicit table definitions register raw data in the
+Glue Data Catalog.</li>
+<li>Glue Spark jobs standardize timestamps, currencies, status values,
+and customer/order keys.</li>
+<li>Curated data is stored as partitioned Parquet, typically by order
+date.</li>
+<li>Athena supports ad hoc analysis; Redshift serves governed,
+high-concurrency warehouse workloads.</li>
+<li>CloudWatch alarms on queue depth, DLQ messages, failed jobs, and
+data freshness.</li>
+</ol>
+<h2 id="design-decisions">Design decisions</h2>
+<ul>
+<li><strong>At-least-once delivery:</strong> assume duplicate events;
+make transformations idempotent.</li>
+<li><strong>Schema evolution:</strong> version event schemas and
+quarantine unsupported versions.</li>
+<li><strong>Partitioning:</strong> choose partitions that align with
+common filters; avoid over-partitioning.</li>
+<li><strong>Small files:</strong> compact output files before large
+Athena scans.</li>
+<li><strong>Replay:</strong> retain raw events and support replay by
+event date or event ID.</li>
+<li><strong>Cost:</strong> use S3 lifecycle policies, Parquet
+compression, and partition pruning.</li>
+</ul>
+<h2 id="data-quality">Data quality</h2>
+<p>Check unique order/event IDs, non-null order IDs, valid status
+transitions, positive item quantities, and reconciliation between order
+totals and item totals. Route invalid events to a quarantine prefix and
+preserve error reasons.</p>
+<h2 id="interview-walkthrough">Interview walkthrough</h2>
+<p><strong>Question: Why use SQS between events and processing?</strong>
+It decouples producers from consumers, absorbs traffic spikes, enables
+controlled retries, and supports a dead-letter queue for poison
+messages. Consumers can scale independently.</p>
+<p><strong>Question: How do you prevent duplicate orders?</strong> Use a
+stable event ID and business key, maintain a processed-event ledger or
+merge into a curated table, and make writes idempotent. Never assume the
+event bus delivers exactly once.</p>
+<h2 id="portfolio-implementation">Portfolio implementation</h2>
+<p>Run <code>python src/transform_retail_orders.py</code>. It
+standardizes the synthetic order feed, removes duplicate event
+deliveries, quarantines invalid records, and creates a daily sales
+summary.</p>
+<p>For AWS deployment, use an IAM execution role, S3 bucket encryption,
+Glue job bookmarks where appropriate, and CloudWatch alarms. Do not
+place AWS access keys in source code.</p>
+<footer>Sankar Kommanaboina · <a href="../index.html">Portfolio</a></footer></div></body></html>

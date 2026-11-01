@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Study 3 —
+GCP Mobility Streaming Analytics | Sankar Kommanaboina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f4f6f9;--surface:#fff;--ink:#141a2b;--muted:#566079;--line:#dde2ec;--accent:#2a46d4;--accent-soft:#e6eafc;
+--display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1320;--surface:#161b2c;--ink:#e8ebf4;--muted:#9aa3bb;--line:#262d44;--accent:#8ea0ff;--accent-soft:#1e2647;color-scheme:dark}}
+*{box-sizing:border-box}html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:32px 72px}
+nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:40px;font-size:15px}
+a{color:var(--accent);text-underline-offset:3px}
+.btn{display:inline-flex;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:500}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(32px,5.5vw,48px);margin:8px 0 24px}
+h2{font-size:26px;margin:48px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:28px 0 8px}
+p,li{max-width:70ch}
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--accent-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+thead:empty,thead tr:only-child th:empty{display:none}
+pre{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;font:13px/1.55 var(--mono);white-space:pre-wrap}
+code{font-family:var(--mono);font-size:.92em}
+blockquote{margin:16px 0;padding:4px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+footer{margin-top:56px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+</style></head><body><div class="wrap">
+<nav><a class="btn" href="../index.html">← Back to portfolio</a><a class="btn primary" href="https://github.com/Sankarkommanaboina/Sankarkommanaboina.github.io/tree/main/projects/cloud-data-engineering" target="_blank" rel="noopener">View code on GitHub</a></nav>
+<span class="eyebrow">Data engineering · Google Cloud</span>
+<h1 id="case-study-3--gcp-mobility-streaming-analytics">Case Study 3 —
+GCP Mobility Streaming Analytics</h1>
+<h2 id="business-problem">Business problem</h2>
+<p>A mobility company receives trip events from vehicles and mobile
+clients. Operations teams need recent trip volume, duration, distance,
+and service-area trends, while analysts need historical reporting.</p>
+<h2 id="architecture">Architecture</h2>
+<p><strong>Mobile / vehicle producers → Pub/Sub → Dataflow (Apache Beam)
+→ BigQuery raw + curated datasets → Looker</strong></p>
+<p>Supporting services:</p>
+<ul>
+<li>Cloud Storage for replay/archive and batch backfills.</li>
+<li>Cloud Composer for scheduled dependencies and backfills.</li>
+<li>Cloud Monitoring and Cloud Logging for operational visibility.</li>
+<li>IAM, Secret Manager, CMEK where required, and VPC Service Controls
+for governance.</li>
+</ul>
+<h2 id="streaming-design">Streaming design</h2>
+<ol type="1">
+<li>Producers publish versioned trip events to Pub/Sub.</li>
+<li>Pub/Sub subscriptions decouple producers and stream processors.</li>
+<li>Dataflow validates schema, parses event time, enriches service-area
+metadata, and handles late events with event-time windows and allowed
+lateness.</li>
+<li>Valid events are written to BigQuery; invalid events go to a
+dead-letter topic or quarantine table.</li>
+<li>BigQuery SQL builds hourly and daily aggregates.</li>
+<li>Looker dashboards expose operational and historical trends.</li>
+</ol>
+<h2 id="important-concepts">Important concepts</h2>
+<ul>
+<li><strong>Event time vs processing time:</strong> use event timestamps
+for business windows so delayed messages do not distort reporting.</li>
+<li><strong>Windowing:</strong> tumbling hourly windows are suitable for
+hourly operational metrics; session windows may suit user activity.</li>
+<li><strong>Late data:</strong> define allowed lateness and update
+aggregates when late events arrive.</li>
+<li><strong>Exactly-once expectations:</strong> understand connector
+guarantees and design downstream writes for deduplication using event
+IDs.</li>
+<li><strong>BigQuery cost:</strong> partition by event date, cluster by
+common filter keys, and select only required columns.</li>
+</ul>
+<h2 id="data-quality">Data quality</h2>
+<p>Validate event ID, trip ID, event timestamp, positive duration,
+non-negative distance, and recognized service-area code. Monitor null
+rates, duplicate IDs, late-event percentage, and event-to-dashboard
+latency.</p>
+<h2 id="interview-walkthrough">Interview walkthrough</h2>
+<p><strong>Question: How would you handle late-arriving events?</strong>
+I would use event-time processing in Dataflow, define a watermark and
+allowed lateness, and configure the aggregation strategy to accept late
+updates. I would preserve raw events so historical windows can be
+recomputed if a correction exceeds the lateness threshold.</p>
+<p><strong>Question: How do you control BigQuery cost?</strong>
+Partition tables on the event date, cluster on frequently filtered
+dimensions, avoid <code>SELECT *</code>, set query cost controls, and
+materialize repeated expensive transformations when justified.</p>
+<h2 id="portfolio-implementation">Portfolio implementation</h2>
+<p>Run <code>python src/transform_mobility.py</code>. It validates and
+deduplicates synthetic trip events and creates daily area-level
+metrics.</p>
+<p>For a GCP deployment, provision Pub/Sub topics and subscriptions,
+deploy a Dataflow streaming template or Beam pipeline, and create
+partitioned BigQuery tables. Use service accounts with narrowly scoped
+roles.</p>
+<footer>Sankar Kommanaboina · <a href="../index.html">Portfolio</a></footer></div></body></html>

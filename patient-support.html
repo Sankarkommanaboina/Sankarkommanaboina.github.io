@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Patient Support
+Assistant — Case Study | Sankar Kommanaboina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f4f6f9;--surface:#fff;--ink:#141a2b;--muted:#566079;--line:#dde2ec;--accent:#2a46d4;--accent-soft:#e6eafc;
+--display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1320;--surface:#161b2c;--ink:#e8ebf4;--muted:#9aa3bb;--line:#262d44;--accent:#8ea0ff;--accent-soft:#1e2647;color-scheme:dark}}
+*{box-sizing:border-box}html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:32px 72px}
+nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:40px;font-size:15px}
+a{color:var(--accent);text-underline-offset:3px}
+.btn{display:inline-flex;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:500}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(32px,5.5vw,48px);margin:8px 0 24px}
+h2{font-size:26px;margin:48px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:28px 0 8px}
+p,li{max-width:70ch}
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--accent-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+thead:empty,thead tr:only-child th:empty{display:none}
+pre{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;font:13px/1.55 var(--mono);white-space:pre-wrap}
+code{font-family:var(--mono);font-size:.92em}
+blockquote{margin:16px 0;padding:4px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+footer{margin-top:56px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+</style></head><body><div class="wrap">
+<nav><a class="btn" href="../index.html">← Back to portfolio</a></nav>
+<span class="eyebrow">UX research · Concept project</span>
+<h1 id="ai-patient-support-assistant--case-study">AI Patient Support
+Assistant — Case Study</h1>
+<h2 id="overview">Overview</h2>
+<p>A conversational AI assistant that helps patients get specialty
+medications by explaining insurance, prior authorization, copay
+assistance and enrollment in plain language, and handing off to a person
+when needed.</p>
+<div class="table-wrap"><table>
+<tbody>
+<tr class="odd">
+<td><strong>Industry</strong></td>
+<td>Pharmaceutical / Healthcare</td>
+</tr>
+<tr class="even">
+<td><strong>Focus</strong></td>
+<td>Conversational and agentic AI, UX research, patient experience</td>
+</tr>
+<tr class="odd">
+<td><strong>Role</strong></td>
+<td>UX Researcher and Conversation Designer (solo)</td>
+</tr>
+<tr class="even">
+<td><strong>Project type</strong></td>
+<td>Self-initiated concept project</td>
+</tr>
+<tr class="odd">
+<td><strong>Status</strong></td>
+<td>Concept, prototype and research plan complete; participant research
+is the next phase</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="problem">Problem</h2>
+<p>Patients prescribed specialty medications can wait days or weeks to
+start treatment, because access depends on several separate steps that
+no one explains end to end.</p>
+<ul>
+<li><strong>Insurance verification</strong> — is the drug covered, and
+at what tier?</li>
+<li><strong>Prior authorization</strong> — the prescriber must justify
+the drug to the insurer, often without the patient knowing.</li>
+<li><strong>Financial assistance</strong> — copay cards and foundations
+each have their own eligibility rules.</li>
+<li><strong>Enrollment and specialty pharmacy</strong> — forms,
+documents and calls across several organizations.</li>
+</ul>
+<p><strong>Design question:</strong> can a conversational AI assistant
+help patients understand these steps and know their next action —
+without giving medical advice, overstating certainty, or hiding the path
+to a human?</p>
+<h2 id="my-role">My role</h2>
+<p>I owned the project end to end as the researcher and conversation
+designer.</p>
+<ol type="1">
+<li>Framed the problem and the design question.</li>
+<li>Mapped the patient journey from prescription to first refill.</li>
+<li>Designed six assistant scenarios, guardrails and human hand-off
+rules.</li>
+<li>Built a testable conversational prototype.</li>
+<li>Wrote the research plan, consent script, interview guide and
+usability tasks.</li>
+<li>Built the analysis workflow: a session workbook and a Python
+theme-coding script.</li>
+</ol>
+<h2 id="patient-journey">Patient journey</h2>
+<p>The journey has six stages; prior authorization and financial
+assistance are where confusion is expected to peak. These are working
+hypotheses that the research phase will test.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>Patient's question</th>
+<th>Likely pain point</th>
+<th>Where AI could help</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Prescription received</td>
+<td>"What happens now?"</td>
+<td>No one explains the steps ahead</td>
+<td>Plain-language overview of the road to first dose</td>
+</tr>
+<tr class="even">
+<td>2. Insurance check</td>
+<td>"Is this covered?"</td>
+<td>Coverage terms are confusing</td>
+<td>Explain tiers, deductibles, what to ask the insurer</td>
+</tr>
+<tr class="odd">
+<td>3. Prior authorization</td>
+<td>"Why is it delayed?"</td>
+<td>Invisible process, no status</td>
+<td>Explain PA, typical documents, who does what</td>
+</tr>
+<tr class="even">
+<td>4. Financial assistance</td>
+<td>"Can I afford it?"</td>
+<td>Many programs, unclear eligibility</td>
+<td>Narrow down programs and eligibility questions</td>
+</tr>
+<tr class="odd">
+<td>5. Enrollment</td>
+<td>"What forms do I need?"</td>
+<td>Paperwork across organizations</td>
+<td>Document checklist, review before submit</td>
+</tr>
+<tr class="even">
+<td>6. First fill and refills</td>
+<td>"When does it arrive?"</td>
+<td>Hard-to-follow pharmacy calls</td>
+<td>Status explanation and refill reminders</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="assistant-design">Assistant design</h2>
+<p>The assistant explains processes and next steps; it never diagnoses,
+prescribes, or promises coverage.</p>
+<p><strong>Scenarios:</strong> insurance and coverage guidance · prior
+authorization explanation · copay and financial assistance · enrollment
+walkthrough · application status · hand-off to a human.</p>
+<p><strong>Key design decisions</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Decision</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Administrative guidance only, no medical advice</td>
+<td>Medical questions need a clinician; mixing the two would put
+patients at risk and blur accountability</td>
+</tr>
+<tr class="even">
+<td>State uncertainty plainly ("Only your insurer can confirm
+this")</td>
+<td>A confident wrong answer about coverage costs patients money and
+trust</td>
+</tr>
+<tr class="odd">
+<td>Ask for the minimum personal data, and say why first</td>
+<td>Health and insurance data is sensitive; explaining purpose makes
+sharing a choice</td>
+</tr>
+<tr class="even">
+<td>Summary and explicit confirmation before any submission</td>
+<td>Patients stay in control of consequential actions</td>
+</tr>
+<tr class="odd">
+<td>"Talk to a person" available at every step</td>
+<td>AI should reduce effort, not become a barrier to help</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Hand off to a human when the patient</strong> asks a medical
+question, is denied coverage, shows distress or can't afford treatment,
+or asks the same thing twice.</p>
+<h2 id="prototype">Prototype</h2>
+<p>The prototype is a configured LLM conversation (ChatGPT) that behaves
+as the assistant, so the concept can be tested with real people before
+any engineering. It uses a fictional drug ("Veltrana") and fictional
+programs so no one mistakes it for a real product.</p>
+<pre><code>You are &quot;CareBridge&quot;, a patient support assistant for a fictional specialty medication called Veltrana (made by the fictional company Northwind Pharma).
+
+Your job: help patients understand medication access steps — insurance coverage, prior authorization, copay assistance, enrollment, and refill status.
+
+Rules:
+1. Use plain language at about a 6th–8th grade reading level. Short answers, then offer more detail.
+2. Never give medical advice (dosage, side effects, whether to take or stop the drug). Say: &quot;That&#39;s a question for your doctor or pharmacist. Want me to connect you with a nurse line?&quot;
+3. Never promise coverage or eligibility. Say what is uncertain and who can confirm it.
+4. Ask only for the information you need, and say why before asking.
+5. Before anything is &quot;submitted&quot;, show a summary and ask the patient to confirm.
+6. Offer &quot;talk to a person&quot; whenever the patient seems confused, upset, is denied coverage, or asks the same thing twice.
+7. Fictional facts you can use: The Northwind Copay Card lowers copays to as little as $10/month for commercially insured patients (not Medicare/Medicaid). Prior authorization usually takes 3–10 business days. Enrollment needs: insurance card, prescription details, and a signed consent form.
+
+Start by greeting the patient and asking how you can help today.</code></pre>
+<h2 id="research-approach">Research approach</h2>
+<p>Five 30–40 minute moderated sessions, each combining a short
+discovery interview with a usability test of the prototype. Participants
+are adults who have handled insurance for a prescription, or caregivers
+who did so for a family member.</p>
+<p><strong>Interview themes:</strong> past access experiences, the most
+confusing step, cost barriers, attitudes to AI help, and what would
+build or break trust.</p>
+<p><strong>Usability tasks</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Scenario</th>
+<th>Success looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T1 Coverage</td>
+<td>Find out what happens next with insurance</td>
+<td>States the next step in their own words</td>
+</tr>
+<tr class="even">
+<td>T2 Prior authorization</td>
+<td>Learn what PA means and how long it takes</td>
+<td>Explains PA and the 3–10 day range</td>
+</tr>
+<tr class="odd">
+<td>T3 Cost help</td>
+<td>Look for help with a $400 copay</td>
+<td>Finds the copay card and notices its eligibility limits</td>
+</tr>
+<tr class="even">
+<td>T4 Medical question</td>
+<td>Ask about a drug interaction</td>
+<td>Assistant declines and offers a human; participant notices</td>
+</tr>
+<tr class="odd">
+<td>T5 Get a person</td>
+<td>Ask to talk to someone</td>
+<td>Reaches a hand-off in two messages or fewer</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Evaluation framework:</strong> task completion, time, errors,
+and a 1–7 confidence rating per task, reviewed across five dimensions —
+<strong>trust, transparency, privacy, control, human
+support</strong>.</p>
+<p><strong>Ethics:</strong> informed consent, no real health or
+insurance details, anonymous IDs (P1–P5), recordings deleted after notes
+are written.</p>
+<h2 id="tools">Tools</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>How I used it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ChatGPT</strong></td>
+<td>Drafting support for research templates; serves as the
+conversational prototype in testing</td>
+</tr>
+<tr class="even">
+<td><strong>Excel</strong></td>
+<td>Session workbook: participant log, notes, task results and an
+auto-calculating summary</td>
+</tr>
+<tr class="odd">
+<td><strong>Python</strong></td>
+<td>Script that counts themes (cost, coverage, trust, privacy, etc.)
+across session notes</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>How I work with AI:</strong> I use generative AI to reach a
+first draft quickly, then apply my own judgment — choosing methods,
+tailoring content to the real problem, setting guardrails, and
+validating with people. AI output is a starting point, not evidence;
+every theme the script assigns is checked by hand.</p>
+<h2 id="next-steps">Next steps</h2>
+<ol type="1">
+<li>Run the five participant sessions.</li>
+<li>Synthesize findings by theme, with evidence such as "4 of 5
+participants…".</li>
+<li>Revise the assistant's design and conversation flows based on what
+fails.</li>
+<li>Run a second round to confirm the fixes.</li>
+</ol>
+<p>I'd be glad to walk through the design decisions and demo the
+prototype live.</p>
+<footer>Sankar Kommanaboina · <a href="../index.html">Portfolio</a></footer></div></body></html>
